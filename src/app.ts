@@ -5,7 +5,7 @@ const flowBienvenida = addKeyword ('Hola').addAnswer('Como estas??')
 
 
 const main = async () => {
-
+    
     const provider = createProvider(BaileysProvider)
     
     provider.initHttpServer(3002)
@@ -19,13 +19,16 @@ const main = async () => {
             media: mediaUrl
         })
         res.end('OK 200')
-    }))
+    }
+    )
+    )
 
     await createBot({
         flow: createFlow([flowBienvenida]),
         database: new MemoryDB(),
         provider: provider
-    })
+    }
+    )
 }
 
 main()
