@@ -42,25 +42,38 @@ var flowBienvenida = (0, bot_1.addKeyword)('Hola').addAnswer('Como estas??');
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var provider;
     return __generator(this, function (_a) {
-        provider = (0, bot_1.createProvider)(provider_baileys_1.BaileysProvider);
-        provider.initHttpServer(3002);
-        provider.http.server.post('/send-message', (0, provider_baileys_1.handleCtx)(async(bot, req, res)));
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                provider = (0, bot_1.createProvider)(provider_baileys_1.BaileysProvider);
+                provider.initHttpServer(3002);
+                provider.http.server.post('/send-message', (0, provider_baileys_1.handleCtx)(function (bot, req, res) { return __awaiter(void 0, void 0, void 0, function () {
+                    var body, phone, message, mediaUrl;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                body = req.body;
+                                phone = body.phone;
+                                message = body.message;
+                                mediaUrl = body.mediaUrl;
+                                return [4 /*yield*/, bot.sendMessage(phone, message, {
+                                        media: mediaUrl
+                                    })];
+                            case 1:
+                                _a.sent();
+                                res.end('OK 200');
+                                return [2 /*return*/];
+                        }
+                    });
+                }); }));
+                return [4 /*yield*/, (0, bot_1.createBot)({
+                        flow: (0, bot_1.createFlow)([flowBienvenida]),
+                        database: new bot_1.MemoryDB(),
+                        provider: provider
+                    })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
     });
 }); };
-{
-    var body = req.body;
-    var phone = body.phone;
-    var message = body.message;
-    var mediaUrl = body.mediaUrl;
-    await bot.sendMessage(phone, message, {
-        media: mediaUrl
-    });
-    res.end('OK 200');
-}
-await (0, bot_1.createBot)({
-    flow: (0, bot_1.createFlow)([flowBienvenida]),
-    database: new bot_1.MemoryDB(),
-    provider: provider
-});
 main();
